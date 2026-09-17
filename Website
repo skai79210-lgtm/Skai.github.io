@@ -1,0 +1,258 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Little Question 💗</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e7, #f8b6d2);
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .heart {
+            font-size: 70px;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        h1 {
+            margin-top: 20px;
+            color: #e83e8c;
+            font-size: 38px;
+        }
+
+        p {
+            margin-top: 15px;
+            color: #555;
+            font-size: 18px;
+        }
+
+        .buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 70px;
+        }
+
+        button {
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        #yesBtn {
+            background: #ff4f9a;
+            color: white;
+            box-shadow: 0 6px 15px rgba(255, 79, 154, 0.35);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.08);
+        }
+
+        #noBtn {
+            background: #eee;
+            color: #555;
+        }
+
+        #message {
+            display: none;
+            margin-top: 30px;
+            color: #e83e8c;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 25px;
+            animation: floatUp linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-110vh);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .buttons {
+                gap: 10px;
+            }
+
+            button {
+                padding: 13px 22px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="heart">💗</div>
+
+        <h1>Will you be my girlfriend?</h1>
+
+        <p>
+            I've been wanting to ask you this for a while...
+            So, what do you say? 🥺
+        </p>
+
+        <div class="buttons">
+
+            <button id="yesBtn">
+                YES 💕
+            </button>
+
+            <button id="noBtn">
+                NO 😭
+            </button>
+
+        </div>
+
+        <div id="message">
+            YAYYY! I knew you'd say yes! 💕🥰
+        </div>
+
+    </div>
+
+    <script>
+
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const message = document.getElementById("message");
+
+        let noClicks = 0;
+
+        noBtn.addEventListener("click", function () {
+
+            noClicks++;
+
+            // Make NO smaller every time
+            let newScale = Math.max(0, 1 - noClicks * 0.18);
+
+            noBtn.style.transform = `scale(${newScale})`;
+
+            // Make YES slightly bigger
+            let yesScale = 1 + noClicks * 0.05;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Change the text
+            const messages = [
+                "Are you sure? 🥺",
+                "Really? 😭",
+                "Think again... 💔",
+                "Pleaseee? 🥹",
+                "Don't do this 😭",
+                "One more chance? 💗"
+            ];
+
+            if (noClicks <= messages.length) {
+                noBtn.textContent = messages[noClicks - 1];
+            }
+
+            // Make the button disappear
+            if (noClicks >= 6) {
+                noBtn.style.display = "none";
+            }
+        });
+
+
+        yesBtn.addEventListener("click", function () {
+
+            // Hide buttons
+            document.querySelector(".buttons").style.display = "none";
+
+            // Show message
+            message.style.display = "block";
+
+            // Start hearts
+            for (let i = 0; i < 40; i++) {
+                createHeart();
+            }
+        });
+
+
+        function createHeart() {
+
+            const heart = document.createElement("div");
+
+            heart.classList.add("floating-heart");
+
+            heart.textContent = ["💗", "💕", "💖", "💘", "❤️"][Math.floor(Math.random() * 5)];
+
+            heart.style.left = Math.random() * 100 + "vw";
+
+            heart.style.animationDuration =
+                (Math.random() * 3 + 2) + "s";
+
+            heart.style.fontSize =
+                (Math.random() * 25 + 15) + "px";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+    </script>
+
+</body>
+</html>
+```
